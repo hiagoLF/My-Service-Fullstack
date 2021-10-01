@@ -41,6 +41,7 @@ export const AddServiceButton = styled.button`
 
 export const ServiceCard = styled.div`
    width: 85%;
+   max-width: 350px;
 
    margin-bottom: 10px;
 

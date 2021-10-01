@@ -17,7 +17,7 @@ class UserRepository extends Repository<User> {
     const user = await this.findOne({
       where: {
         id,
-      },
+      }, relations: ['offices']
     });
 
     return user;

@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { ServiceType } from "../@types/Service";
 import { getUserInformations } from "../services/api/UserApi";
 
 type UserDataType =
@@ -7,6 +8,7 @@ type UserDataType =
       email?: string;
       imageUrl?: string;
       authToken?: string;
+      offices?: ServiceType[];
     }
   | undefined;
 
@@ -17,6 +19,7 @@ type UserContextProps = {
   setUser: (user: UserDataType) => void;
   authenticationStatus: AuthenticationStatusType;
   setAuthenticationStatus: (status: AuthenticationStatusType) => void;
+  refreshUserProfile: () => void;
 };
 
 const UserContext = createContext<UserContextProps>({
@@ -24,6 +27,7 @@ const UserContext = createContext<UserContextProps>({
   setUser: (informations) => console.warn("No user provided"),
   authenticationStatus: "loading",
   setAuthenticationStatus: (status) => console.warn("No status provided"),
+  refreshUserProfile: () => console.warn("User no found"),
 });
 
 export const UserProvider: React.FC = ({ children }) => {
@@ -50,10 +54,20 @@ export const UserProvider: React.FC = ({ children }) => {
     findUserInformations();
     return;
   }, []);
+  
+  const refreshUserProfile = () => {
+    findUserInformations();
+  };
 
   return (
     <UserContext.Provider
-      value={{ user, setUser, authenticationStatus, setAuthenticationStatus }}
+      value={{
+        user,
+        setUser,
+        authenticationStatus,
+        setAuthenticationStatus,
+        refreshUserProfile,
+      }}
     >
       {children}
     </UserContext.Provider>

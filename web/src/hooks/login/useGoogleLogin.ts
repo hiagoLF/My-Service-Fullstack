@@ -1,22 +1,16 @@
 import { GoogleLoginResponse } from "react-google-login";
-import api from "../../services/api";
+import { loginUser } from "../../services/api/UserApi";
 
 export default function useGoogleLogin() {
-
   const handleGoogleLoginSuccess = async (googleData: GoogleLoginResponse) => {
-    const loginResult = await api.post("/login", { token: googleData.tokenId });
+    const loginResult = await loginUser(googleData.tokenId);
 
-    if (!loginResult.data) {
-      alert("Não Foi possível obter os dados do usuário");
-      return;
-    }
+    localStorage.setItem("authToken", loginResult.authToken);
 
-    localStorage.setItem("authToken", loginResult.data.authToken);
-
-    console.log("Token de Login Armazenado >>>> ", loginResult.data.authToken);
+    console.log("Token de Login Armazenado >>>> ", loginResult.authToken);
 
     // We use window location to restart aplication state
-    window.location.href = '/'
+    window.location.href = "/";
   };
 
   const handleGoogleLoginFailed = () => {

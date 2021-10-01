@@ -4,7 +4,7 @@ import officeRoutes from "./OfficeRoutes";
 
 const routes = Router();
 
-routes.use("/user", usersRoutes);
 routes.use("/office", officeRoutes);
+routes.use("/user", usersRoutes);
 
 export default routes;

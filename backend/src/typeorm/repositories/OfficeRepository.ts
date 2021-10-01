@@ -12,6 +12,16 @@ class OfficeRepository extends Repository<Office> {
 
     return office;
   }
+
+  public async findById(id: string): Promise<Office | undefined> {
+    const office = await this.findOne({
+      where: {
+        id,
+      },
+    });
+
+    return office;
+  }
 }
 
 export default OfficeRepository;

@@ -1,14 +1,17 @@
 import { Router } from "express";
-import createNewOffice from "../controllers/Offices/createNewOffice";
-import findMyOffices from "../controllers/Offices/findMyOffices";
 import verifyUserAuthentication from "../middlewares/verifyUserAuthentication";
+import officeControllers from "../controllers/Offices";
 
 const officeRoutes = Router();
 
+officeRoutes.get("/:id", officeControllers.findOfficeById);
+
 officeRoutes.use(verifyUserAuthentication);
 
-officeRoutes.post('/', createNewOffice)
+officeRoutes.post("/", officeControllers.createNewOffice);
 
-officeRoutes.get("/contracted", findMyOffices);
+officeRoutes.put("/subscribe/:officeId", officeControllers.subscribeUserToOffice)
+
+// officeRoutes.get("/", officeControllers.findMyOffices);
 
 export default officeRoutes;
